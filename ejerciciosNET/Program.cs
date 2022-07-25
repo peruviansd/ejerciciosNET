@@ -297,11 +297,11 @@ namespace ejerciciosNET
             }
             // indexPosicion = Convert.ToInt32(posicion);
 
-            while (indexPosicion <= 0 || indexPosicion >= 10 || posciciones[indexPosicion] == 'X' || posciciones[indexPosicion] == 'O')
+            while (indexPosicion <= 0 || indexPosicion >= 10 || posciciones[indexPosicion] == 'X' || posciciones[indexPosicion] == 'O' || success == false)
             {
                 Console.WriteLine(" Posicion ya elegida o no existe, eliga otra posicion");
                 posicion = Console.ReadLine();
-                indexPosicion = Convert.ToInt32(posicion);
+                success = int.TryParse(posicion, out indexPosicion);
             }
 
             posciciones[indexPosicion] = (turno == 'A') ? 'X' : 'O';
@@ -313,9 +313,9 @@ namespace ejerciciosNET
         {
 
             string respuesta = "";
-            Console.Write("desea volver a jugar? (y/n)");
+            Console.Write("desea volver a jugar? (yes: y | no : cualquier otra tecla)");
             respuesta = Console.ReadLine();
-            if (respuesta.ToLower() == "y")
+            if (respuesta.ToLower() == "y" || respuesta.ToLower() == "yes")
             {
                 TicTacToe();
             }
@@ -327,52 +327,68 @@ namespace ejerciciosNET
         }
         public static void Menu()
         {
-            Console.WriteLine("Choose one method to use");
-            Console.WriteLine("1. PascalCase ");
-            Console.WriteLine("2. Palindromo ");
-            Console.WriteLine("3. Check if a day is Laboral ");
-            Console.WriteLine("4. CheckPassword ");
-            Console.WriteLine("5. Calculadora Inversa");
-            Console.WriteLine("6. TicaTacToe");
+            bool opcionValida;
+
+            do
+            {
+                Console.WriteLine("Choose one method to use");
+                Console.WriteLine("1. PascalCase ");
+                Console.WriteLine("2. Palindromo ");
+                Console.WriteLine("3. Check if a day is Laboral ");
+                Console.WriteLine("4. CheckPassword ");
+                Console.WriteLine("5. Calculadora Inversa");
+                Console.WriteLine("6. TicaTacToe");
+
+                int answer;
+
+                opcionValida = int.TryParse(Console.ReadLine(), out answer);
+
+                if (answer == 1)
+                {
+                    Console.WriteLine("Intruduce a phrase");
+                    string text = Console.ReadLine();
+                    Console.WriteLine(PascalCase(text));
+                }
+                else if (answer == 2)
+                {
+                    Console.WriteLine("Introduce the word that you want to check if its palidromo");
+                    string text = Console.ReadLine();
+                    Console.WriteLine(IsPalindromo(text));
+                }
+                else if (answer == 3)
+                {
+                    Console.WriteLine("Introduce the day ");
+                    string text = Console.ReadLine();
+                    Console.WriteLine(IsLaboral(text));
+
+                }
+                else if (answer == 4)
+                {
+                    CheckPassword();
+                }
+                else if (answer == 5)
+                {
+                    CalculadoraInversa();
+                }
+                else if (answer == 6)
+                {
+                    TicTacToe();
+                }
+                else
+                {
+                    Console.WriteLine("You have intruced a wrong option");
+                    Console.WriteLine();
+                    opcionValida = false;
+                }
 
 
-            int answer = Convert.ToInt32(Console.ReadLine());
+            } while (opcionValida == false);
 
-            if (answer == 1)
-            {
-                Console.WriteLine("Intruduce a phrase");
-                string text = Console.ReadLine();
-                Console.WriteLine(PascalCase(text));
-            }
-            else if (answer == 2)
-            {
-                Console.WriteLine("Introduce the word that you want to check if its palidromo");
-                string text = Console.ReadLine();
-                Console.WriteLine(IsPalindromo(text));
-            }
-            else if (answer == 3)
-            {
-                Console.WriteLine("Introduce the day ");
-                string text = Console.ReadLine();
-                Console.WriteLine(IsLaboral(text));
 
-            }
-            else if (answer == 4)
-            {
-                CheckPassword();
-            }
-            else if (answer == 5)
-            {
-                CalculadoraInversa();
-            }
-            else if(answer == 6)
-            {
-                TicTacToe();
-            }
-            else
-            {
-                Console.WriteLine("You have intruced a wrong option");
-            }
+
+
+
+
 
 
         }
